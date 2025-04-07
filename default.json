@@ -1,12 +1,13 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices",
     ":semanticCommits",
-    ":timezone(Pacific/Auckland)",
     "npm:unpublishSafe",
     "group:allDigest",
     "group:allNonMajor",
-    ":enableVulnerabilityAlerts"
+    ":enableVulnerabilityAlerts",
+    ":timezone(Pacific/Auckland)"
   ],
   "timezone": "Pacific/Auckland",
   "schedule": ["before 5am on Sunday"],
@@ -23,9 +24,10 @@
       "automergeType": "branch"
     },
     {
-      "description": "Disable updates for packages with security issues",
+      "description": "Prioritize security updates",
       "matchSecurityAdvisories": ["high", "critical"],
-      "enabled": false
+      "prPriority": 1,
+      "labels": ["security-update"]
     }
   ],
   "vulnerabilityAlerts": {
@@ -33,7 +35,9 @@
     "assignees": ["@gnometeaparty/developers"],
     "schedule": "at any time"
   },
+  "reviewersFromCodeOwners": true,
   "stabilityDays": 3,
   "dependencyDashboard": true,
-  "rebaseWhen": "behind-base-branch"
+  "rebaseWhen": "behind-base-branch",
+  "prConcurrentLimit": 5
 }
